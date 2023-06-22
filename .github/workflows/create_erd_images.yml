@@ -22,7 +22,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y graphviz
 
       - name: Run Python Script
-        run: python create_erd_images.py
+        run: python -m install -r requirements.txt && python create_erd_images.py
 
       - name: Commit and Push Changes
         env:
