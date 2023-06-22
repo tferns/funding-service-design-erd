@@ -1,0 +1,4 @@
+psycopg2
+python-dotenv
+sqlalchemy==1.4.44
+sqlalchemy_schemadisplay

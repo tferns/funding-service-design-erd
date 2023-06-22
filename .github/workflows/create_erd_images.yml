@@ -1,0 +1,35 @@
+name: Python Script Runner
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Graphviz
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+
+      - name: Run Python Script
+        run: python create_erd_images.py
+
+      - name: Commit and Push Changes
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git config user.name "Thomas Ferns"
+          git config user.email "thomas.ferns@version1.com"
+          git add -u
+          git commit -m "Automated commit by GitHub Actions"
+          git push origin HEAD:refs/heads/main
