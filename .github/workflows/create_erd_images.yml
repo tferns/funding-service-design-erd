@@ -1,4 +1,4 @@
-name: Python Script Runner
+name: Update ERD Images
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-script:
+  checkout-generate-commit-push-erd:
     runs-on: ubuntu-latest
 
     steps:
