@@ -22,16 +22,12 @@ _README_FILE = 'README.md'
 
 def main(_: Sequence[str] | None = None) -> int:
 
-    filenames = []
+    new_readme_content = ''
     for database in _DATABASES:
         metadata = MetaData(bind=f'{_DATABASE_BASE_URL}/{database}')
         graph = create_schema_graph(metadata=metadata)
         filename = f'erds/{database}.png'
-        filenames.append(filename)
         graph.write_png(filename)
-
-    new_readme_content = ''
-    for database, filename in zip(_DATABASES, filenames):
         new_readme_content += f'### {database.capitalize()}:\n'
         new_readme_content += f'![{filename}]({filename})\n\n'
 
@@ -42,6 +38,7 @@ def main(_: Sequence[str] | None = None) -> int:
     modified_content = re.sub(
         pattern, rf'\1\n\n{new_readme_content}\2', old_readme_content,
     )
+
     with open(_README_FILE, 'w') as file:
         file.write(modified_content)
 
